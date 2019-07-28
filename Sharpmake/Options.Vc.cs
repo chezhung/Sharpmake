@@ -932,6 +932,33 @@ namespace Sharpmake
                     Disable
                 }
             }
+
+            // CHEZ CHANGE begin: support for remote builds in Visual Studio.
+            public static class RemoteBuild
+            {
+                public class ProjectDirectory
+                {
+                    public ProjectDirectory(string value) { Value = value; }
+
+                    public string Value;
+                }
+
+                public class RelativeDirectory
+                {
+                    public RelativeDirectory(string value) { Value = value; }
+
+                    public string Value;
+                }
+
+                public class Variable
+                {
+                    public Variable(string key, string value) { Key = key; Value = value; }
+
+                    public string Key;
+                    public string Value;
+                }
+            }
+            // CHEZ CHANGE end: support for remote builds in Visual Studio.
         }
     }
 }

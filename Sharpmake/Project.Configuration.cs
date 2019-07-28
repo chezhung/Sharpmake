@@ -64,6 +64,9 @@ namespace Sharpmake
         AdditionalUsingDirectories = 1 << 5,
         ForceUsingAssembly = 1 << 6,
 
+        // CHEZ CHANGE: added a new dependency setting to have proper build order between project dependencies.
+        BuildPrerequisite = 1 << 7,
+
         /// <summary>
         /// Specifies that the dependant project inherits the dependency's library files, library
         /// paths, include paths and defined symbols.
@@ -936,6 +939,9 @@ namespace Sharpmake
             /// Gets a list of files that must be compiled with SEH exceptions enabled.
             /// </summary>
             public Strings SourceFilesExceptionsEnabledWithSEH = new Strings();
+
+            // CHEZ CHANGE: List of GUIDs of the projects that this project depends on to be properly built
+            public Strings ProjectGuidDependencies = new Strings();
 
             // The .ruleset file to use for code analysis
             public string CodeAnalysisRuleSetFilePath = RemoveLineTag;
@@ -2752,6 +2758,13 @@ namespace Sharpmake
                     {
                         GenericBuildDependencies.Add(dependency);
                     }
+
+                    // CHEZ CHANGE begin: this needed to have proper build ordering.
+                    if (dependencySetting.HasFlag(DependencySetting.BuildPrerequisite))
+                    {
+                        ProjectGuidDependencies.Add(dependency.ProjectGuid);
+                    }
+                    // CHEZ CHANGE end: this needed to have proper build ordering.
 
                     if (dependency.Output == OutputType.Lib || dependency.Output == OutputType.Dll || dependency.Output == OutputType.None)
                     {

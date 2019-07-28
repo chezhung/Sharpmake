@@ -347,7 +347,7 @@ namespace Sharpmake
             {
                 var defines = new List<string>();
                 defines.AddRange(base.GetImplicitlyDefinedSymbols(context));
-                defines.Add("WIN64");
+                defines.Add("Mswin64");
 
                 return defines;
             }

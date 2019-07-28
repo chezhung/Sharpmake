@@ -59,7 +59,11 @@
     <Compile Include="BasePlatform.cs" />
     <Compile Include="DefaultPlatform.cs" />
     <Compile Include="DotNetPlatform.cs" />
-    <Compile Include="Linux\LinuxPlatform.cs" />
+    <Compile Include="Linux\ARMPlatform.cs" />
+    <Compile Include="Linux\BaseLinuxPlatform.cs" />
+    <Compile Include="Linux\BaseLinuxPlatform.Vcxproj.Template.cs" />
+    <Compile Include="Linux\x64Platform.cs" />
+    <Compile Include="Linux\x86Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\BaseWindowsPlatform.cs" />
     <Compile Include="Windows\ClangForWindowsSettings.cs" />

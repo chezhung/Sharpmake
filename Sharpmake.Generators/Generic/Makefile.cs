@@ -363,7 +363,11 @@ namespace Sharpmake.Generators.Generic
                 // set generator information
                 switch (conf.Platform)
                 {
-                    case Platform.linux:
+                    // CHEZ CHANGE begin: added 32/64/ARM support for Linux platform.
+                    case Platform.linux32:
+                    case Platform.linux64:
+                    case Platform.linuxARM:
+                    // CHEZ CHANGE end: added 32/64/ARM support for Linux platform.
                         conf.GeneratorSetGeneratedInformation("elf", "elf", "so", "pdb");
                         break;
                     default:

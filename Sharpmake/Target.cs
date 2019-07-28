@@ -100,8 +100,12 @@ namespace Sharpmake
         ctr        = 1 << 12,
         ios        = 1 << 13,
         android    = 1 << 14,
-        linux      = 1 << 15,
-        mac        = 1 << 16,
+        // CHEZ CHANGE begin: added 32/64/ARM support for Linux platform.
+        linux32    = 1 << 15,
+        linux64    = 1 << 16,
+        linuxARM   = 1 << 17,
+        mac        = 1 << 18,
+        // CHEZ CHANGE end: added 32/64/ARM support for Linux platform.
 
         _reserved9 = 1 << 22,
         _reserved8 = 1 << 23,

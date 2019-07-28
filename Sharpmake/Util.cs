@@ -38,6 +38,142 @@ namespace Sharpmake
 
         public static readonly char OtherSeparator = UsesUnixSeparator ? Util.WindowsSeparator : Util.UnixSeparator;
 
+        // CHEZ CHANGE begin: added my custom utility properties and methods.
+        /// <summary>
+        /// Get the default dependency settings.
+        /// </summary>
+        public static DependencySetting DefaultDependencySettings
+        {
+            get { return (DependencySetting.LibraryFiles | 
+                          DependencySetting.LibraryPaths | 
+                          DependencySetting.IncludePaths | 
+                          DependencySetting.BuildPrerequisite); }
+        }
+
+        /// <summary>
+        /// Get the default Windows platform flags.
+        /// </summary>
+        public static Platform DefaultMswinPlatforms
+        {
+            get { return (Platform.win32 | Platform.win64); }
+        }
+
+        /// <summary>
+        /// Get the default Windows platform flags.
+        /// </summary>
+        public static Platform DefaultLinuxPlatforms
+        {
+            get { return (Platform.linux32 | Platform.linux64 | Platform.linuxARM); }
+        }
+
+        /// <summary>
+        /// Get the default Raspberry Pi platform flag.
+        /// </summary>
+        public static Platform DefaultRPiPlatforms
+        {
+            get { return (Platform.linuxARM); }
+        }
+
+        /// <summary>
+        /// Get the default Visual Studio development environment flags.
+        /// </summary>
+        public static DevEnv DefaultVisualStudioDevEnvs
+        {
+            get { return (DevEnv.vs2019); }
+        }
+
+        /// <summary>
+        /// Check if the platform is one of the Windows platforms.
+        /// </summary>
+        /// <param name="platform">The platform to check.</param>
+        /// <returns>True if the platform is one of the Windows platforms.</returns>
+        public static bool IsMswinPlatform(Platform platform)
+        {
+            return (platform == Platform.win32 || 
+                    platform == Platform.win64);
+        }
+
+        /// <summary>
+        /// Check if the platform is one of the Linux platforms.
+        /// </summary>
+        /// <param name="platform">The platform to check.</param>
+        /// <returns>True if the platform is one of the Linux platforms.</returns>
+        public static bool IsLinuxPlatform(Platform platform)
+        {
+            return (platform == Platform.linux32 || 
+                    platform == Platform.linux64 || 
+                    platform == Platform.linuxARM);
+        }
+
+        /// <summary>
+        /// Compose configuration name.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="addOutputType">
+        /// True to append output type to the configuration name.
+        /// </param>
+        /// <returns>The composed configuration name.</returns>
+        public static string ComposeConfigurationName(
+            Target target, 
+            bool addOutputType = true)
+        {
+            if (addOutputType == true)
+            {
+                if (target.OutputType == OutputType.Dll)
+                    return "[target.Optimization]_DLL";
+                else if (target.OutputType == OutputType.Lib)
+                    return @"[target.Optimization]_LIB";
+            }
+
+            return "[target.Optimization]";
+        }
+
+        /// <summary>
+        /// Add public dependency to the project configuration for the specified target.
+        /// </summary>
+        /// <typeparam name="PublicDependencyProjectType">The dependency project to be added.</typeparam>
+        /// <param name="configuration">The project configuration to add dependency to.</param>
+        /// <param name="target">The target to be configured.</param>
+        public static void AddPublicDependency<PublicDependencyProjectType>(
+            Project.Configuration configuration,
+            ITarget target)
+        {
+            configuration.AddPublicDependency(
+                target,
+                typeof(PublicDependencyProjectType),
+                DefaultDependencySettings);
+        }
+
+        /// <summary>
+        /// Create targets for the default Windows platforms.
+        /// </summary>
+        /// <param name="outputType">The desired output types.</param>
+        /// <returns>The created target.</returns>
+        public static Target CreateDefaultMswinTarget(OutputType outputType = OutputType.Lib)
+        {
+            return new Target(
+                DefaultMswinPlatforms,
+                DefaultVisualStudioDevEnvs,
+                Optimization.Debug | Optimization.Release,
+                outputType);
+        }
+
+        /// <summary>
+        /// Create targets for the default Raspberry Pi development platforms.
+        /// (Windows and Linux ARM)
+        /// </summary>
+        /// <param name="outputType">The desired output types.</param>
+        /// <returns>The created target.</returns>
+        public static Target CreateDefaultRPiTarget(OutputType outputType = OutputType.Lib)
+        {
+            return new Target(
+                DefaultMswinPlatforms | DefaultRPiPlatforms,
+                DefaultVisualStudioDevEnvs,
+                Optimization.Debug | Optimization.Release,
+                outputType);
+        }
+        // CHEZ CHANGE end: added my custom utility properties and methods.
+
         // A better type name (for generic classes)
         public static string ToNiceTypeName(this Type type)
         {
@@ -75,7 +211,10 @@ namespace Sharpmake
 
         public static string PathMakeStandard(string path)
         {
-            return PathMakeStandard(path, !Util.IsRunningInMono());
+            // CHEZ CHANGE begin: Never make lowercase.
+            //return PathMakeStandard(path, !Util.IsRunningInMono());
+            return PathMakeStandard(path, false);
+            // CHEZ CHANGE end: Never make lowercase.
         }
 
         /// <summary>
