@@ -35,7 +35,7 @@ namespace Sharpmake
         public sealed class Win64Platform : BaseWindowsPlatform
         {
             #region IPlatformDescriptor implementation
-            public override string SimplePlatformString => "x64";
+            public override string SimplePlatformString => "x64"; // CHEZ CHANGE: changed platform name.
 
             public override EnvironmentVariableResolver GetPlatformEnvironmentResolver(params VariableAssignment[] assignments)
             {
@@ -347,7 +347,7 @@ namespace Sharpmake
             {
                 var defines = new List<string>();
                 defines.AddRange(base.GetImplicitlyDefinedSymbols(context));
-                defines.Add("Mswin64");
+                defines.Add("WIN64");
 
                 return defines;
             }

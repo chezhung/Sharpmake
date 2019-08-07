@@ -18,8 +18,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\debug</OutputPath>
-    <IntermediateOutputPath>..\tmp\obj\debug\sharpmake</IntermediateOutputPath>
+    <OutputPath>..\bin\Debug</OutputPath>
+    <IntermediateOutputPath>..\tmp\obj\Debug\Sharpmake</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\tmp\obj\Debug\Sharpmake</BaseIntermediateOutputPath>
     <DocumentationFile>..\bin\Debug\Sharpmake.xml</DocumentationFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -35,8 +35,8 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\release</OutputPath>
-    <IntermediateOutputPath>..\tmp\obj\release\sharpmake</IntermediateOutputPath>
+    <OutputPath>..\bin\Release</OutputPath>
+    <IntermediateOutputPath>..\tmp\obj\Release\Sharpmake</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\tmp\obj\Release\Sharpmake</BaseIntermediateOutputPath>
     <DocumentationFile>..\bin\Release\Sharpmake.xml</DocumentationFile>
     <DefineConstants>TRACE</DefineConstants>
@@ -93,6 +93,8 @@
     <Compile Include="IWindowsFastBuildCompilerSettings.cs" />
     <Compile Include="KitsRootPaths.cs" />
     <Compile Include="MSBuildGlobalSettings.cs" />
+    <Compile Include="MyPresetProject.cs" />
+    <Compile Include="MyPresetSolution.cs" />
     <Compile Include="Options.Android.cs" />
     <Compile Include="Options.AndroidMakefile.cs" />
     <Compile Include="Options.CSharp.cs" />

@@ -67,14 +67,6 @@ namespace Sharpmake
         }
 
         /// <summary>
-        /// Get the default Raspberry Pi platform flag.
-        /// </summary>
-        public static Platform DefaultRPiPlatforms
-        {
-            get { return (Platform.linuxARM); }
-        }
-
-        /// <summary>
         /// Get the default Visual Studio development environment flags.
         /// </summary>
         public static DevEnv DefaultVisualStudioDevEnvs
@@ -106,6 +98,92 @@ namespace Sharpmake
         }
 
         /// <summary>
+        /// Check if the platform is one of the Mac platforms.
+        /// </summary>
+        /// <param name="platform">The platform to check.</param>
+        /// <returns>True if the platform is one of the Linux platforms.</returns>
+        public static bool IsMacPlatform(Platform platform)
+        {
+            return (platform == Platform.mac);
+        }
+
+        /// <summary>
+        /// Get the general platform name for each system.
+        /// </summary>
+        /// <param name="platform">The platform.</param>
+        /// <returns>The platform name.</returns>
+        public static string GetGeneralPlatformName(Platform platform)
+        {
+            if (IsMswinPlatform(platform) == true)
+                return "Mswin";
+            else if (IsLinuxPlatform(platform) == true)
+                return "Linux";
+            else if (platform == Platform.ios)
+                return "iOS";
+            else if (platform == Platform.android)
+                return "Android";
+            else if (platform == Platform.mac)
+                return "MacOS";
+
+            return "Other";
+        }
+
+        /// <summary>
+        /// Get the development environment string.
+        /// </summary>
+        /// <param name="devEnv">The development environment.</param>
+        /// <returns>The development environment string.</returns>
+        public static string GetDevEnvString(DevEnv devEnv)
+        {
+            switch (devEnv)
+            {
+                case DevEnv.vs2010:
+                    return "vs2010";
+
+                case DevEnv.vs2012:
+                    return "vs2012";
+
+                case DevEnv.vs2013:
+                    return "vs2013";
+
+                case DevEnv.vs2015:
+                    return "vs2015";
+
+                case DevEnv.vs2017:
+                    return "vs2017";
+
+                case DevEnv.vs2019:
+                    return "vs2019";
+
+                case DevEnv.eclipse:
+                    return "eclapse";
+
+                case DevEnv.xcode4ios:
+                    return "xcode";
+
+                case DevEnv.make:
+                    return "make";
+
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Normalize the slashes in the path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="platform">The platform to set the path for.</param>
+        /// <returns>The normalized path.</returns>
+        public static string NormalizePath(string path, Platform platform)
+        {
+            if (IsMswinPlatform(platform) == true)
+                return path.Replace('/', '\\');
+            else
+                return path.Replace('\\', '/');
+        }
+
+        /// <summary>
         /// Compose configuration name.
         /// </summary>
         /// <param name="target">The target.</param>
@@ -126,6 +204,34 @@ namespace Sharpmake
             }
 
             return "[target.Optimization]";
+        }
+
+        /// <summary>
+        /// Compose the path of the project folder according to the target.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns>The path to the project folder.</returns>
+        public static string ComposeProjectPath(Target target)
+        {
+            string subpath = string.Format(
+                "{0}/{1}",
+                GetGeneralPlatformName(target.Platform),
+                GetDevEnvString(target.DevEnv));
+            return Util.NormalizePath(subpath, target.Platform);
+        }
+
+        /// <summary>
+        /// Compose the path of the solution folder according to the target.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns>The path to the project folder.</returns>
+        public static string ComposeSolutionPath(Target target)
+        {
+            string subpath = string.Format(
+                "{0}/{1}",
+                GetGeneralPlatformName(target.Platform),
+                GetDevEnvString(target.DevEnv));
+            return Util.NormalizePath(subpath, target.Platform);
         }
 
         /// <summary>
@@ -159,15 +265,28 @@ namespace Sharpmake
         }
 
         /// <summary>
-        /// Create targets for the default Raspberry Pi development platforms.
-        /// (Windows and Linux ARM)
+        /// Create targets for the default Linux ARM development platforms.
         /// </summary>
         /// <param name="outputType">The desired output types.</param>
         /// <returns>The created target.</returns>
-        public static Target CreateDefaultRPiTarget(OutputType outputType = OutputType.Lib)
+        public static Target CreateDefaultARMTarget(OutputType outputType = OutputType.Lib)
         {
             return new Target(
-                DefaultMswinPlatforms | DefaultRPiPlatforms,
+                Platform.linuxARM,
+                DefaultVisualStudioDevEnvs,
+                Optimization.Debug | Optimization.Release,
+                outputType);
+        }
+
+        /// <summary>
+        /// Create targets for the Windows and Linux ARM development platforms.
+        /// </summary>
+        /// <param name="outputType">The desired output types.</param>
+        /// <returns>The created target.</returns>
+        public static Target CreateDefaultMswinARMTarget(OutputType outputType = OutputType.Lib)
+        {
+            return new Target(
+                DefaultMswinPlatforms | Platform.linuxARM,
                 DefaultVisualStudioDevEnvs,
                 Optimization.Debug | Optimization.Release,
                 outputType);

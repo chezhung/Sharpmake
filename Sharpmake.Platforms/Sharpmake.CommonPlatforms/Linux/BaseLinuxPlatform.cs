@@ -31,7 +31,7 @@ namespace Sharpmake
             public override bool IsPcPlatform => true;
             public override bool IsUsingClang => false; // Maybe now? Traditionally GCC but only the GNU project is backing it now.
             public override bool HasDotNetSupport => false; // Technically false with .NET Core and Mono.
-            public override bool HasSharedLibrarySupport => false; // Was not specified in sharpmake (probably because it was not implemented), but this is obviously wrong.
+            public override bool HasSharedLibrarySupport => true; // CHEZ CHANGE: support shared library for Linux.
             #endregion
 
             #region Project.Configuration.IConfigurationTasks implementation

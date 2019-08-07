@@ -36,7 +36,7 @@ namespace Sharpmake
             {
                 var defines = new List<string>();
                 defines.AddRange(base.GetImplicitlyDefinedSymbols(context));
-                defines.Add("Mswin32");
+                defines.Add("WIN32");
 
                 return defines;
             }

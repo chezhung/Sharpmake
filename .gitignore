@@ -4,6 +4,7 @@
 # by default, ignore all solution and projects
 *.sln
 *.csproj
+/deploy
 # but negate for the following, mandatorily versionned
 !Sharpmake/Sharpmake.csproj
 !Sharpmake.Application/Sharpmake.Application.csproj

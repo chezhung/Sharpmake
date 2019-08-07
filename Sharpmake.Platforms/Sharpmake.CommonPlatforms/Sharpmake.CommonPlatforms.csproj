@@ -18,8 +18,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\debug</OutputPath>
-    <IntermediateOutputPath>..\..\tmp\obj\debug\sharpmake.commonplatforms</IntermediateOutputPath>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <IntermediateOutputPath>..\..\tmp\obj\Debug\Sharpmake.CommonPlatforms</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\..\tmp\obj\Debug\Sharpmake.CommonPlatforms</BaseIntermediateOutputPath>
     <DocumentationFile>..\..\bin\Debug\Sharpmake.CommonPlatforms.xml</DocumentationFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -34,8 +34,8 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\release</OutputPath>
-    <IntermediateOutputPath>..\..\tmp\obj\release\sharpmake.commonplatforms</IntermediateOutputPath>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <IntermediateOutputPath>..\..\tmp\obj\Release\Sharpmake.CommonPlatforms</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\..\tmp\obj\Release\Sharpmake.CommonPlatforms</BaseIntermediateOutputPath>
     <DocumentationFile>..\..\bin\Release\Sharpmake.CommonPlatforms.xml</DocumentationFile>
     <DefineConstants>TRACE</DefineConstants>
@@ -60,8 +60,8 @@
     <Compile Include="DefaultPlatform.cs" />
     <Compile Include="DotNetPlatform.cs" />
     <Compile Include="Linux\ARMPlatform.cs" />
-    <Compile Include="Linux\BaseLinuxPlatform.cs" />
     <Compile Include="Linux\BaseLinuxPlatform.Vcxproj.Template.cs" />
+    <Compile Include="Linux\BaseLinuxPlatform.cs" />
     <Compile Include="Linux\x64Platform.cs" />
     <Compile Include="Linux\x86Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
